@@ -83,8 +83,6 @@ Overview of [`safe-control-gym`](https://arxiv.org/abs/2109.06325)'s API:
 ```
 
 
-
-
 ## Getting Started
 Familiarize with APIs and environments with the scripts in [`examples/`](https://github.com/utiasDSL/safe-control-gym/tree/main/examples)
 ```
@@ -121,6 +119,25 @@ $ python3 verbose_api.py --system cartpole --overrides verbose_api.yaml         
 - [MPSC](https://github.com/utiasDSL/safe-control-gym/blob/main/safe_control_gym/controllers/mpsc/mpsc.py)
 - [CBF](https://github.com/utiasDSL/safe-control-gym/blob/main/safe_control_gym/controllers/cbf/cbf_qp.py)
 
+## URA - Evaluating how different controllers behave under different disturbances
+
+The `/ura` folder consists of the following:
+1. PID - tracking a trajectory under no disturbance, white noise, and impulse noise
+3. PPO - tracking a trajectory under no disturbance, white noise, and impulse noise
+4. SAC - tracking a trajectory under no disturbance, white noise, and impulse noise
+5. GP-MPSC - tracking a trajectory under no disturbance, white noise, and impulse noise
+6. MPSC Experiment used to generate Figure 8 - stabilization task under no disturbance, white noise, and impulse noise 
+
+The above experiements each have a `yaml` file describing the agent, and all the controllers except for the PIC controllers have already been trained, so their models from `walkthroughs/tutorial_models/tutorial_results` are borrowed. To re-train models follow the instructions in the below sections.
+
+To run the experiments, execute the following commands:
+```
+cd ura
+python3 pidquad.py --overrides ./pidquad.yaml  
+python3 ppoquad.py --algo ppo --task quadrotor --overrides ppoquad.yaml --output_dir ./ppoquad_models --func test --eval_output_dir results --tag ppoquad_results/ppo
+python3 sacquad.py --algo sac --task quadrotor --overrides sacquad.yaml --output_dir ./sacquad_models --func test --eval_output_dir results --tag sacquad_results/sac
+python3 ./gpmpcquad.py --task quadrotor --algo gp_mpc --overrides gpmpcquad.yaml
+```
 
 ## Re-create the Results in "Safe Learning in Robotics" [[arXiv link]](https://arxiv.org/pdf/2108.06266.pdf)
 

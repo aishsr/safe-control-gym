@@ -1,11 +1,11 @@
-"""A quadrotor trajectory tracking example.
+"""Test various disturbances on PID controller
 
 Notes:
     Includes and uses PID control.
 
 Run as:
 
-    $ python3 ura.py --overrides ./ura.yaml
+    $ python3 pidquad.py --overrides ./pidquad.yaml  
 
 """
 import time
@@ -71,7 +71,6 @@ def main():
     }
 
     steps = []
-    rewards = []
    
     # Create an environment
     CONFIG_FACTORY = ConfigFactory()               
@@ -118,7 +117,7 @@ def main():
                 # obs, reward, done, info, action = results['obs'][i], results['reward'][i], results['done'][i], results['info'][i], results['action'][i]
                 reward = results['reward'][j]
 
-                # record results
+                # record results (reward earned))
                 experimentResults[n][m].append(1-reward[0])
 
             ctrl.close()            

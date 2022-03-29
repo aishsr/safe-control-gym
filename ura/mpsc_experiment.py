@@ -1,6 +1,5 @@
-"""This script runs the MPSC experiment in our Annual Reviews article.
-
-See Figure 8 in https://arxiv.org/pdf/2108.06266.pdf.
+"""Figure 8 - MPSC experiment with disturbances
+See Figure 8 (without disturbances) in https://arxiv.org/pdf/2108.06266.pdf.
 
 """
 import os

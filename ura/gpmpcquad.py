@@ -1,4 +1,4 @@
-"""This script runs the GP-MPC experiment in our Annual Reviews article.
+"""Robust GP-MPSC with disturbances
 
 See Figure 6 in https://arxiv.org/pdf/2108.06266.pdf.
 
@@ -234,7 +234,9 @@ if __name__ == "__main__":
                         **config.algo_config
                         )
             ctrl.reset()
+            
             # print(json.dumps(config, sort_keys=True, indent=4))
+
             # Initial state for comparison.
             init_state = {'init_x': -1.0,
                         'init_x_dot': 0.0,
@@ -249,20 +251,18 @@ if __name__ == "__main__":
             prior_results = ctrl.prior_ctrl.run(env=test_env,
                                                 max_steps=30)
 
-            print(prior_results)
-
             # Learn the gp by collecting training points.
             ctrl.learn()
             if not config.train_only:
                 # Run with the learned gp model.
-
-                run_results = ctrl.run(env=test_env,
-                                    max_steps=50)
+                run_results = ctrl.run(env=test_env, max_steps=50)
                 ctrl.close()
+
                 # Plot the results.
                 prior_run = munch.munchify(prior_results)
                 run = munch.munchify(run_results)
                 plot_xz_comparison_diag_constraint(prior_run, run, 1)
+                
                 # plt.show()
                 plt.savefig('./figures/'+str(controllers[n])+'_'+str(type_disturbances[m])+'_figure8.png')
         config.task_config.pop('disturbances')

@@ -1,4 +1,4 @@
-"""Template training/plotting/testing script.
+"""Test various disturbances on SAC controller
 
 """
 import os
@@ -29,6 +29,7 @@ def test_policy(config):
     null_disturbance = {
         'disturbances': 'null'
     }
+
     white_noise_disturbance =  {
         'disturbances': {
             'observation': [
@@ -70,7 +71,6 @@ def test_policy(config):
     }
 
     steps = []
-    rewards = []
     experimentResults = [[[] for _ in range(cols)] for _ in range(rows)]
 
     # Set iterations and episode counter.
@@ -138,7 +138,7 @@ def test_policy(config):
             msg += "eval_mse {:.3f} +/- {:.3f}\n".format(mse.mean(), mse.std())
             print(msg)
 
-            # Plot the experiment.
+            # add MSE results
             experimentResults[n][m].append(mse.mean())
 
 
